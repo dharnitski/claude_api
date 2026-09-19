@@ -15,12 +15,17 @@ def add_assistant_message(messages: list[MessageParam], text: str) -> None:
     messages.append(assistant_message)
 
 
-def chat(messages: list[MessageParam], system: str | Omit = omit) -> str:
+def chat(
+    messages: list[MessageParam],
+    system: str | Omit = omit,
+    stop_sequences: list[str] | Omit = omit,
+) -> str:
     message = client.messages.create(
         model=model,
         max_tokens=1000,
         messages=messages,
         system=system,
+        stop_sequences=stop_sequences,
     )
 
     block = message.content[0]
