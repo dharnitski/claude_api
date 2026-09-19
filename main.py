@@ -1,4 +1,4 @@
-from anthropic import Anthropic
+from anthropic import Anthropic, Omit, omit
 from anthropic.types import Message, MessageParam
 
 client = Anthropic()
@@ -9,17 +9,22 @@ def add_user_message(messages: list[MessageParam], text: str) -> None:
     user_message: MessageParam = {"role": "user", "content": text}
     messages.append(user_message)
 
+
 def add_assistant_message(messages: list[MessageParam], text: str) -> None:
     assistant_message: MessageParam = {"role": "assistant", "content": text}
     messages.append(assistant_message)
 
-def chat(messages: list[MessageParam]) -> str:
+
+def chat(messages: list[MessageParam], system: str | Omit = omit) -> str:
     message = client.messages.create(
         model=model,
         max_tokens=1000,
         messages=messages,
+        system=system,
     )
+
     return message.content[0].text
+
 
 def ask(prompt: str) -> Message:
     return client.messages.create(
@@ -50,6 +55,13 @@ if __name__ == "__main__":
     # Add a follow-up question
     add_user_message(messages, "Write another sentence")
 
+    # With system prompt
+    system = """
+    You are a patient math tutor.
+    Do not directly answer a student's questions.
+    Guide them to a solution step by step.
+    """
+
     # Get the follow-up response with full context
-    final_answer = chat(messages)
+    final_answer = chat(messages, system=system)
     print(final_answer)
