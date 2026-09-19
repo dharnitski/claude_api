@@ -12,3 +12,12 @@ with client.messages.stream(
 ) as stream:
     for text in stream.text_stream:
         print(text, end="", flush=True)
+
+
+    # # Getting the Complete Message
+    # for text in stream.text_stream:
+    #     # Send each chunk to your client
+    #     pass
+    
+    # # Get the complete message for database storage
+    # final_message = stream.get_final_message()
