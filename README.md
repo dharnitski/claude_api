@@ -54,7 +54,7 @@ See [`message.py`](./message.py) for a minimal typed example.
 make test
 ```
 
-`test_message.py` hits the real Anthropic API and requires `ANTHROPIC_API_KEY` (via `.env` or the environment); it's skipped otherwise.
+`tests/integration/test_message.py` hits the real Anthropic API and requires `ANTHROPIC_API_KEY` (via `.env` or the environment); it's skipped otherwise.
 
 ## Code quality
 
