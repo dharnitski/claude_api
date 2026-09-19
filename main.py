@@ -1,5 +1,5 @@
 from anthropic import Anthropic, Omit, omit
-from anthropic.types import Message, MessageParam
+from anthropic.types import Message, MessageParam, TextBlock
 
 client = Anthropic()
 model = "claude-sonnet-4-5"
@@ -23,7 +23,9 @@ def chat(messages: list[MessageParam], system: str | Omit = omit) -> str:
         system=system,
     )
 
-    return message.content[0].text
+    block = message.content[0]
+    assert isinstance(block, TextBlock)
+    return block.text
 
 
 def ask(prompt: str) -> Message:

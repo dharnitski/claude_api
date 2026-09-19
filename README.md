@@ -55,3 +55,11 @@ make test
 ```
 
 `test_main.py` hits the real Anthropic API and requires `ANTHROPIC_API_KEY` (via `.env` or the environment); it's skipped otherwise.
+
+## Code quality
+
+```
+make fix
+```
+
+Formats with ruff, autofixes lint issues, and type-checks with mypy.

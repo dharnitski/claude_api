@@ -9,6 +9,8 @@ python-dotenv = "*"
 
 [dev-packages]
 pytest = "*"
+ruff = "*"
+mypy = "*"
 
 [requires]
 python_version = "3.13"
