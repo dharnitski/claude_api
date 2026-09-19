@@ -43,7 +43,7 @@ Based on the [Building with the Claude API](https://academy.claude.com/courses/b
 7. Run the example:
 
    ```
-   pipenv run python main.py
+   make run
    ```
 
 See [`main.py`](./main.py) for a minimal typed example.
@@ -51,7 +51,7 @@ See [`main.py`](./main.py) for a minimal typed example.
 ## Tests
 
 ```
-pipenv run pytest
+make test
 ```
 
 `test_main.py` hits the real Anthropic API and requires `ANTHROPIC_API_KEY` (via `.env` or the environment); it's skipped otherwise.
