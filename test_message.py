@@ -3,7 +3,7 @@ import os
 import pytest
 from dotenv import load_dotenv
 
-from main import MessageParam, add_user_message, chat
+from message import MessageParam, add_user_message, chat
 
 load_dotenv()
 

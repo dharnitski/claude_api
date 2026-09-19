@@ -1,7 +1,7 @@
 .PHONY: run test fix
 
 run:
-	pipenv run python main.py
+	pipenv run python message.py
 
 test:
 	pipenv run pytest

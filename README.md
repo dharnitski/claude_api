@@ -46,7 +46,7 @@ Based on the [Building with the Claude API](https://academy.claude.com/courses/b
    make run
    ```
 
-See [`main.py`](./main.py) for a minimal typed example.
+See [`message.py`](./message.py) for a minimal typed example.
 
 ## Tests
 
@@ -54,7 +54,7 @@ See [`main.py`](./main.py) for a minimal typed example.
 make test
 ```
 
-`test_main.py` hits the real Anthropic API and requires `ANTHROPIC_API_KEY` (via `.env` or the environment); it's skipped otherwise.
+`test_message.py` hits the real Anthropic API and requires `ANTHROPIC_API_KEY` (via `.env` or the environment); it's skipped otherwise.
 
 ## Code quality
 
