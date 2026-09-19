@@ -47,3 +47,11 @@ Based on the [Building with the Claude API](https://academy.claude.com/courses/b
    ```
 
 See [`main.py`](./main.py) for a minimal typed example.
+
+## Tests
+
+```
+pipenv run pytest
+```
+
+`test_main.py` hits the real Anthropic API and requires `ANTHROPIC_API_KEY` (via `.env` or the environment); it's skipped otherwise.
