@@ -39,3 +39,27 @@ Based on the [Building with the Claude API](https://academy.claude.com/courses/b
    ```
 
    The `anthropic` SDK automatically reads `ANTHROPIC_API_KEY` from the environment, so `Anthropic()` works without passing the key explicitly (once `.env` is loaded via `load_dotenv()`).
+
+## Quick example
+
+```python
+from anthropic import Anthropic
+from anthropic.types import Message
+from dotenv import load_dotenv
+
+load_dotenv()
+client = Anthropic()
+
+
+def ask(prompt: str) -> Message:
+    return client.messages.create(
+        model="claude-sonnet-4-5",
+        max_tokens=1024,
+        messages=[{"role": "user", "content": prompt}],
+    )
+
+
+if __name__ == "__main__":
+    response = ask("Hello, Claude!")
+    print(response.content[0].text)
+```
