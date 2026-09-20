@@ -8,7 +8,7 @@ from typing import Literal, TypedDict
 
 from anthropic.types import MessageParam
 
-from message import add_assistant_message, add_user_message, chat
+from message import add_assistant_message, add_user_message, chat, text_from_message
 
 Format = Literal["python", "json", "regex"]
 
@@ -62,7 +62,7 @@ def generate_dataset(count: int = 5) -> list[EvalCase]:
     messages: list[MessageParam] = []
     add_user_message(messages, prompt)
     add_assistant_message(messages, "```json")
-    text = chat(messages, stop_sequences=["```"])
+    text = text_from_message(chat(messages, stop_sequences=["```"]))
 
     dataset: list[EvalCase] = json.loads(text)
     return dataset
@@ -90,7 +90,7 @@ def run_prompt(test_case: EvalCase) -> str:
     messages: list[MessageParam] = []
     add_user_message(messages, build_prompt(test_case))
     add_assistant_message(messages, "```code")
-    return chat(messages, stop_sequences=["```"])
+    return text_from_message(chat(messages, stop_sequences=["```"]))
 
 
 def validate_json(text: str) -> int:
@@ -147,7 +147,7 @@ def grade_by_model(test_case: EvalCase, output: str) -> ModelGrade:
     add_user_message(messages, eval_prompt)
     add_assistant_message(messages, "```json")
 
-    eval_text = chat(messages, stop_sequences=["```"])
+    eval_text = text_from_message(chat(messages, stop_sequences=["```"]))
     grade: ModelGrade = json.loads(eval_text)
     return grade
 

@@ -1,17 +1,25 @@
 from anthropic import Anthropic, Omit, omit
-from anthropic.types import Message, MessageParam, TextBlock
+from anthropic.types import Message, MessageParam, ToolParam, ToolResultBlockParam
 
 client = Anthropic()
 model = "claude-sonnet-4-5"
 
+UserContent = str | Message | list[ToolResultBlockParam]
 
-def add_user_message(messages: list[MessageParam], text: str) -> None:
-    user_message: MessageParam = {"role": "user", "content": text}
+
+def add_user_message(messages: list[MessageParam], message: UserContent) -> None:
+    user_message: MessageParam = {
+        "role": "user",
+        "content": message.content if isinstance(message, Message) else message,
+    }
     messages.append(user_message)
 
 
-def add_assistant_message(messages: list[MessageParam], text: str) -> None:
-    assistant_message: MessageParam = {"role": "assistant", "content": text}
+def add_assistant_message(messages: list[MessageParam], message: str | Message) -> None:
+    assistant_message: MessageParam = {
+        "role": "assistant",
+        "content": message.content if isinstance(message, Message) else message,
+    }
     messages.append(assistant_message)
 
 
@@ -19,18 +27,20 @@ def chat(
     messages: list[MessageParam],
     system: str | Omit = omit,
     stop_sequences: list[str] | Omit = omit,
-) -> str:
-    message = client.messages.create(
+    tools: list[ToolParam] | Omit = omit,
+) -> Message:
+    return client.messages.create(
         model=model,
         max_tokens=1000,
         messages=messages,
         system=system,
         stop_sequences=stop_sequences,
+        tools=tools,
     )
 
-    block = message.content[0]
-    assert isinstance(block, TextBlock)
-    return block.text
+
+def text_from_message(message: Message) -> str:
+    return "\n".join([block.text for block in message.content if block.type == "text"])
 
 
 def ask(prompt: str) -> Message:
@@ -71,4 +81,4 @@ if __name__ == "__main__":
 
     # Get the follow-up response with full context
     final_answer = chat(messages, system=system)
-    print(final_answer)
+    print(text_from_message(final_answer))

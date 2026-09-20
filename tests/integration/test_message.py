@@ -3,7 +3,7 @@ import os
 import pytest
 from dotenv import load_dotenv
 
-from message import MessageParam, add_user_message, chat
+from message import MessageParam, add_user_message, chat, text_from_message
 
 load_dotenv()
 
@@ -16,6 +16,7 @@ def test_chat_returns_response_from_api() -> None:
     add_user_message(messages, "Reply with exactly one word: pong")
 
     response = chat(messages)
+    text = text_from_message(response)
 
-    assert isinstance(response, str)
-    assert len(response) > 0
+    assert isinstance(text, str)
+    assert len(text) > 0
