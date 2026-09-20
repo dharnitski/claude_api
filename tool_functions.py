@@ -21,6 +21,7 @@ DURATION_UNITS = {
     "weeks": lambda amount: datetime.timedelta(weeks=amount),
 }
 
+
 def get_current_datetime(date_format: str = DATETIME_FORMAT) -> str:
     if not date_format:
         raise ValueError("date_format cannot be empty")
@@ -42,6 +43,7 @@ get_current_datetime_schema: ToolParam = {
         "required": [],
     },
 }
+
 
 def add_duration_to_datetime(
     datetime_str: str,
