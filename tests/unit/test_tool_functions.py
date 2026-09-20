@@ -3,7 +3,13 @@ import re
 import pytest
 from anthropic.types import Message, ToolUseBlock, Usage
 
-from tool_functions import get_current_datetime, run_tool, run_tools
+from tool_functions import (
+    add_duration_to_datetime,
+    get_current_datetime,
+    run_tool,
+    run_tools,
+    set_reminder,
+)
 
 
 def _tool_use(name: str, input_: dict) -> ToolUseBlock:
@@ -32,6 +38,32 @@ def test_get_current_datetime_uses_given_format() -> None:
 def test_get_current_datetime_rejects_empty_format() -> None:
     with pytest.raises(ValueError, match="date_format cannot be empty"):
         get_current_datetime("")
+
+
+def test_add_duration_to_datetime_adds_days() -> None:
+    result = add_duration_to_datetime("2050-01-01 00:00:00", 177, "days")
+
+    assert result == "2050-06-27 00:00:00"
+
+
+def test_add_duration_to_datetime_supports_negative_duration() -> None:
+    result = add_duration_to_datetime("2050-01-01 00:00:00", -1, "days")
+
+    assert result == "2049-12-31 00:00:00"
+
+
+def test_add_duration_to_datetime_rejects_unknown_unit() -> None:
+    with pytest.raises(ValueError, match="Invalid unit"):
+        add_duration_to_datetime("2050-01-01 00:00:00", 1, "months")
+
+
+def test_set_reminder_prints_and_returns_confirmation(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    result = set_reminder("doctors appointment", "2050-06-27 00:00:00")
+
+    assert result == "Reminder set for 2050-06-27 00:00:00: doctors appointment"
+    assert capsys.readouterr().out.strip() == result
 
 
 def test_run_tool_dispatches_by_name() -> None:
