@@ -4,7 +4,7 @@ import anthropic
 from anthropic.types import FileMetadata, MessageParam, ToolUnionParam
 
 client = anthropic.Anthropic()
-model = "claude-opus-5"
+model = "claude-sonnet-5"
 
 DATA_FILE = "streaming.csv"
 OUTPUT_DIR = "claude_outputs"
@@ -42,7 +42,11 @@ def analyze_churn() -> None:
             "role": "user",
             "content": [
                 {"type": "text", "text": ANALYSIS_PROMPT},
-                {"type": "container_upload", "file_id": file_metadata.id},
+                {
+                    "type": "container_upload",
+                    "file_id": file_metadata.id,
+                    "cache_control": {"type": "ephemeral"},
+                },
             ],
         }
     ]
@@ -72,6 +76,8 @@ def analyze_churn() -> None:
                     print(f"Downloaded: {saved_path}")
             else:
                 print(f"--- error ---\n{result.error_code}")
+
+    print(f"--- usage ---\n{response.usage}")
 
 
 if __name__ == "__main__":
