@@ -1,17 +1,7 @@
-import os
-
-import pytest
-from dotenv import load_dotenv
-
 from message import MessageParam, add_user_message, text_from_message
 from tool_functions import run_conversation
 
-load_dotenv()
 
-
-@pytest.mark.skipif(
-    not os.getenv("ANTHROPIC_API_KEY"), reason="requires ANTHROPIC_API_KEY"
-)
 def test_run_conversation_calls_tool_and_answers() -> None:
     messages: list[MessageParam] = []
     add_user_message(messages, "What is the exact time, formatted as HH:MM:SS?")

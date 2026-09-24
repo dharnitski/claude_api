@@ -167,10 +167,13 @@ def run_test_case(test_case: EvalCase) -> EvalResult:
     }
 
 
+def average_score(results: list[EvalResult]) -> float:
+    return mean(result["score"] for result in results)
+
+
 def run_eval(dataset: list[EvalCase]) -> list[EvalResult]:
     results = [run_test_case(test_case) for test_case in dataset]
-    average_score = mean(result["score"] for result in results)
-    print(f"Average score: {average_score:.2f}")
+    print(f"Average score: {average_score(results):.2f}")
     return results
 
 

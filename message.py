@@ -44,16 +44,7 @@ def text_from_message(message: Message) -> str:
 
 
 def ask(prompt: str) -> Message:
-    return client.messages.create(
-        model=model,
-        max_tokens=1000,
-        messages=[
-            {
-                "role": "user",
-                "content": prompt,
-            }
-        ],
-    )
+    return chat([{"role": "user", "content": prompt}])
 
 
 if __name__ == "__main__":

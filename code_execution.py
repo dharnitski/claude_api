@@ -22,14 +22,18 @@ def upload(path: str) -> FileMetadata:
         return client.files.upload(file=(os.path.basename(path), file, "text/csv"))
 
 
+def safe_output_path(filename: str, output_dir: str = OUTPUT_DIR) -> str:
+    safe_name = os.path.basename(filename)
+    if not safe_name or safe_name in (".", ".."):
+        raise ValueError(f"Refusing to write unsafe filename: {filename}")
+    return os.path.join(output_dir, safe_name)
+
+
 def download_file(file_id: str) -> str:
     metadata = client.files.retrieve_metadata(file_id)
-    safe_name = os.path.basename(metadata.filename)
-    if not safe_name or safe_name in (".", ".."):
-        raise ValueError(f"Refusing to write unsafe filename: {metadata.filename}")
+    output_path = safe_output_path(metadata.filename)
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-    output_path = os.path.join(OUTPUT_DIR, safe_name)
     client.files.download(file_id).write_to_file(output_path)
     return output_path
 

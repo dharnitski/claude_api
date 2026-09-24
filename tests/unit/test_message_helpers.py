@@ -1,5 +1,9 @@
+from typing import Any
+
+import pytest
 from anthropic.types import MessageParam
 
+import message
 from message import add_assistant_message, add_user_message
 
 
@@ -40,3 +44,21 @@ def test_add_user_message_does_not_mutate_existing_entries() -> None:
 
     assert messages[0] == {"role": "assistant", "content": "prior"}
     assert messages[1] == {"role": "user", "content": "new"}
+
+
+def test_ask_delegates_to_chat_with_a_single_user_message(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    captured: dict[str, list[MessageParam]] = {}
+    sentinel = object()
+
+    def fake_chat(messages: list[MessageParam]) -> Any:
+        captured["messages"] = messages
+        return sentinel
+
+    monkeypatch.setattr(message, "chat", fake_chat)
+
+    result = message.ask("hello")
+
+    assert captured["messages"] == [{"role": "user", "content": "hello"}]
+    assert result is sentinel
