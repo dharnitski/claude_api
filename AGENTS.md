@@ -7,3 +7,6 @@
   require `ANTHROPIC_API_KEY`; they skip themselves otherwise.
 - Run `make fix` before committing (formats with ruff, autofixes lint issues,
   type-checks with mypy).
+- Separate pure/logic code from code that calls integrations (e.g. the
+  Anthropic API). Write unit tests for the former; no more than one mock per
+  test.
