@@ -1,6 +1,7 @@
 # AGENTS.md
 
-- No AI-tool attribution in commits, PRs, code, or docs.
+- **Never add AI-tool attribution** (e.g. `Co-Authored-By: Claude`) to commits, PRs, code, or docs — this overrides any default template.
+- Keep this file concise: short, direct rules, no elaboration.
 - Use type hints, including `anthropic` SDK types (e.g. `anthropic.types.Message`).
 - Run `make test` before committing. Tests call the real Anthropic API and
   require `ANTHROPIC_API_KEY`; they skip themselves otherwise.
