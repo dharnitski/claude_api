@@ -6,42 +6,36 @@ Based on the [Building with the Claude API](https://academy.claude.com/courses/b
 
 ## Setup
 
-1. Check your Python version (3.7.1+ required):
+1. Install [uv](https://docs.astral.sh/uv/) if you don't have it:
 
    ```
-   python --version
+   brew install uv
    ```
 
-2. Install [pipenv](https://pipenv.pypa.io/) if you don't have it:
+2. Install dependencies (this also fetches the pinned Python version from `.python-version`):
 
    ```
-   pip install pipenv
+   uv sync --dev
    ```
 
-3. Install dependencies:
+3. Get an API key from [console.anthropic.com](https://console.anthropic.com) (Settings → API Keys → Create Key).
 
-   ```
-   pipenv install
-   ```
-
-4. Get an API key from [console.anthropic.com](https://console.anthropic.com) (Settings → API Keys → Create Key).
-
-5. Create a `.env` file in the project root:
+4. Create a `.env` file in the project root:
 
    ```
    CLAUDE_MODEL="claude-sonnet-5"
    ANTHROPIC_API_KEY=put-your-api-key-here
    ```
 
-6. Run scripts inside the pipenv environment:
+5. Run scripts inside the uv-managed environment:
 
    ```
-   pipenv run python your_script.py
+   uv run python your_script.py
    ```
 
    The `anthropic` SDK automatically reads `ANTHROPIC_API_KEY` from the environment, so `Anthropic()` works without passing the key explicitly (once `.env` is loaded via `load_dotenv()`).
 
-7. Run the example:
+6. Run the example:
 
    ```
    make run
@@ -84,17 +78,6 @@ make mcp_inspector
 This runs `mcp dev mcp_server.py`, which starts a local inspector UI (requires `node`/`npx`) and prints a URL to
 open in your browser. Click **Connect** on the left to start the server, then use the Resources, Prompts, and
 Tools tabs to list and invoke them individually and see raw results.
-
-Notes on how this works:
-
-- `mcp dev` always launches the server via `uv run` under the hood (regardless of this project's Pipenv setup),
-  so it requires [uv](https://docs.astral.sh/uv/) to be installed separately (`brew install uv`).
-- `uv run` needs `pyproject.toml`'s `[project]` dependencies (including `mcp[cli]`) to resolve; without them it
-  fails with `Error: typer is required`.
-- `UV_ISOLATED=1` makes uv use a throwaway environment for this run instead of writing a persistent `.venv` at
-  the project root. **Don't drop it or run bare `uv run`/`uv sync` in this repo**: if uv ever creates `.venv` here,
-  Pipenv silently switches to using it instead of its own managed environment, breaking `make fix`/`make test`
-  until you `rm -rf .venv`.
 
 ## Tests
 
