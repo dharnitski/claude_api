@@ -2,7 +2,7 @@ from anthropic import Anthropic, Omit, omit
 from anthropic.types import Message, MessageParam, ToolParam, ToolResultBlockParam
 
 client = Anthropic()
-model = "claude-sonnet-4-5"
+model = "claude-sonnet-5"
 
 UserContent = str | Message | list[ToolResultBlockParam]
 

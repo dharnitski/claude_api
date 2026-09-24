@@ -23,7 +23,7 @@ def _message(content: list[ContentBlock]) -> Message:
     return Message(
         id="msg_1",
         content=content,
-        model="claude-sonnet-4-5",
+        model="claude-sonnet-5",
         role="assistant",
         stop_reason="tool_use",
         stop_sequence=None,
