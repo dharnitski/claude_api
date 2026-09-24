@@ -1,7 +1,13 @@
-.PHONY: run test test_unit fix lint
+.PHONY: run mcp_chat mcp_inspector test test_unit fix lint
 
 run:
 	pipenv run python message.py
+
+mcp_chat:
+	pipenv run python mcp_chat.py
+
+mcp_inspector:
+	UV_ISOLATED=1 pipenv run mcp dev mcp_server.py
 
 test:
 	pipenv run pytest

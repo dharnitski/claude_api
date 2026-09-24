@@ -6,9 +6,13 @@ name = "pypi"
 [packages]
 anthropic = "*"
 python-dotenv = "*"
+mcp = {extras = ["cli"], version = "<2"}
+prompt-toolkit = "*"
+pydantic = "*"
 
 [dev-packages]
 pytest = "*"
+pytest-asyncio = "*"
 ruff = "*"
 mypy = "*"
 

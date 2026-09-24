@@ -2,3 +2,5 @@
 .env
 /__pycache__
 /claude_outputs
+/.venv
+/.uv-venv
