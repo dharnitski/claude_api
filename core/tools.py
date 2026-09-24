@@ -89,7 +89,7 @@ class ToolManager:
                         "error" if tool_output and tool_output.isError else "success",
                     )
                 )
-            except Exception as e:  # noqa: BLE001
+            except Exception as e:
                 error_message = f"Error executing tool '{tool_name}': {e}"
                 print(error_message)
                 tool_result_blocks.append(

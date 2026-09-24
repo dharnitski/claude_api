@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 
 import anthropic
 from anthropic.types import FileMetadata, MessageParam, ToolUnionParam
@@ -18,22 +18,22 @@ TOOLS: list[ToolUnionParam] = [
 
 
 def upload(path: str) -> FileMetadata:
-    with open(path, "rb") as file:
-        return client.files.upload(file=(os.path.basename(path), file, "text/csv"))
+    with Path(path).open("rb") as file:
+        return client.files.upload(file=(Path(path).name, file, "text/csv"))
 
 
 def safe_output_path(filename: str, output_dir: str = OUTPUT_DIR) -> str:
-    safe_name = os.path.basename(filename)
+    safe_name = Path(filename).name
     if not safe_name or safe_name in (".", ".."):
         raise ValueError(f"Refusing to write unsafe filename: {filename}")
-    return os.path.join(output_dir, safe_name)
+    return str(Path(output_dir) / safe_name)
 
 
 def download_file(file_id: str) -> str:
     metadata = client.files.retrieve_metadata(file_id)
     output_path = safe_output_path(metadata.filename)
 
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    Path(OUTPUT_DIR).mkdir(parents=True, exist_ok=True)
     client.files.download(file_id).write_to_file(output_path)
     return output_path
 

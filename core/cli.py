@@ -173,7 +173,7 @@ class CliApp:
         try:
             self.resources = await self.agent.list_docs_ids()
             self.completer.update_resources(self.resources)
-        except Exception as e:  # noqa: BLE001
+        except Exception as e:
             print(f"Error refreshing resources: {e}")
 
     async def refresh_prompts(self) -> None:
@@ -182,7 +182,7 @@ class CliApp:
             self.completer.update_prompts(self.prompts)
             self.command_autosuggester = CommandAutoSuggest(self.prompts)
             self.session.auto_suggest = self.command_autosuggester
-        except Exception as e:  # noqa: BLE001
+        except Exception as e:
             print(f"Error refreshing prompts: {e}")
 
     async def run(self) -> None:

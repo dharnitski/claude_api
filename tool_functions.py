@@ -25,7 +25,7 @@ DURATION_UNITS = {
 def get_current_datetime(date_format: str = DATETIME_FORMAT) -> str:
     if not date_format:
         raise ValueError("date_format cannot be empty")
-    return datetime.datetime.now().strftime(date_format)  # noqa: DTZ005
+    return datetime.datetime.now().strftime(date_format)
 
 
 get_current_datetime_schema: ToolParam = {
@@ -56,7 +56,7 @@ def add_duration_to_datetime(
             f"Invalid unit '{unit}'. Must be one of: {', '.join(DURATION_UNITS)}"
         )
 
-    parsed = datetime.datetime.strptime(datetime_str, date_format)  # noqa: DTZ007
+    parsed = datetime.datetime.strptime(datetime_str, date_format)
     result = parsed + DURATION_UNITS[unit](duration)
     return result.strftime(date_format)
 
@@ -147,7 +147,7 @@ def run_tools(message: Message) -> list[ToolResultBlockParam]:
                 "content": str(tool_output),
                 "is_error": False,
             }
-        except Exception as e:  # noqa: BLE001
+        except Exception as e:
             tool_result_block = {
                 "type": "tool_result",
                 "tool_use_id": tool_request.id,

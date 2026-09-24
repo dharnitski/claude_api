@@ -26,7 +26,7 @@ def test_read_document_returns_contents() -> None:
 
 
 def test_read_document_rejects_unknown_id() -> None:
-    with pytest.raises(ValueError, match="Doc with id missing.md not found"):
+    with pytest.raises(ValueError, match=r"Doc with id missing\.md not found"):
         read_document("missing.md")
 
 
@@ -38,7 +38,7 @@ def test_edit_document_replaces_matching_text() -> None:
 
 
 def test_edit_document_rejects_unknown_id() -> None:
-    with pytest.raises(ValueError, match="Doc with id missing.md not found"):
+    with pytest.raises(ValueError, match=r"Doc with id missing\.md not found"):
         edit_document("missing.md", old_str="a", new_str="b")
 
 
@@ -51,7 +51,7 @@ def test_fetch_doc_returns_contents() -> None:
 
 
 def test_fetch_doc_rejects_unknown_id() -> None:
-    with pytest.raises(ValueError, match="Doc with id missing.md not found"):
+    with pytest.raises(ValueError, match=r"Doc with id missing\.md not found"):
         fetch_doc("missing.md")
 
 

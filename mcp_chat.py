@@ -15,8 +15,10 @@ load_dotenv()
 claude_model = os.getenv("CLAUDE_MODEL", "")
 anthropic_api_key = os.getenv("ANTHROPIC_API_KEY", "")
 
-assert claude_model, "Error: CLAUDE_MODEL cannot be empty. Update .env"
-assert anthropic_api_key, "Error: ANTHROPIC_API_KEY cannot be empty. Update .env"
+if not claude_model:
+    raise SystemExit("Error: CLAUDE_MODEL cannot be empty. Update .env")
+if not anthropic_api_key:
+    raise SystemExit("Error: ANTHROPIC_API_KEY cannot be empty. Update .env")
 
 
 async def main() -> None:
