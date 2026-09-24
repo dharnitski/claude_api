@@ -22,3 +22,6 @@ dev = [
 disable = [
     "missing-function-docstring",
 ]
+
+[tool.mypy]
+strict = true

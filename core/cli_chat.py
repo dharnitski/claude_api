@@ -1,3 +1,5 @@
+from typing import cast
+
 from anthropic.types import MessageParam
 from mcp.types import Prompt, PromptMessage, TextContent
 
@@ -21,10 +23,14 @@ class CliChat(Chat):
         return await self.doc_client.list_prompts()
 
     async def list_docs_ids(self) -> list[str]:
-        return await self.doc_client.read_resource("docs://documents")
+        return cast(
+            "list[str]", await self.doc_client.read_resource("docs://documents")
+        )
 
     async def get_doc_content(self, doc_id: str) -> str:
-        return await self.doc_client.read_resource(f"docs://documents/{doc_id}")
+        return cast(
+            "str", await self.doc_client.read_resource(f"docs://documents/{doc_id}")
+        )
 
     async def get_prompt(self, command: str, doc_id: str) -> list[PromptMessage]:
         return await self.doc_client.get_prompt(command, {"doc_id": doc_id})

@@ -1,3 +1,5 @@
+from collections.abc import Iterable
+
 from mcp.types import Prompt
 from prompt_toolkit import PromptSession
 from prompt_toolkit.auto_suggest import AutoSuggest, Suggestion
@@ -45,7 +47,9 @@ class UnifiedCompleter(Completer):
     def update_resources(self, resources: list[str]) -> None:
         self.resources = resources
 
-    def get_completions(self, document: Document, complete_event: CompleteEvent):
+    def get_completions(
+        self, document: Document, complete_event: CompleteEvent
+    ) -> Iterable[Completion]:
         text = document.text
         text_before_cursor = document.text_before_cursor
 

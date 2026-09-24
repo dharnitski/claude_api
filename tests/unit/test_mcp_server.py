@@ -59,11 +59,11 @@ def test_format_document_prompt_references_doc_id() -> None:
     messages = format_document("plan.md")
 
     assert len(messages) == 1
-    assert "plan.md" in messages[0].content.text  # type: ignore[union-attr]
+    assert "plan.md" in messages[0].content.text
 
 
 def test_summarize_document_prompt_references_doc_id() -> None:
     messages = summarize_document("outlook.pdf")
 
     assert len(messages) == 1
-    assert "outlook.pdf" in messages[0].content.text  # type: ignore[union-attr]
+    assert "outlook.pdf" in messages[0].content.text

@@ -1,7 +1,8 @@
 import re
+from typing import Any
 
 import pytest
-from anthropic.types import Message, ToolUseBlock, Usage
+from anthropic.types import ContentBlock, Message, ToolUseBlock, Usage
 
 from tool_functions import (
     TOOL_FUNCTIONS,
@@ -14,11 +15,11 @@ from tool_functions import (
 )
 
 
-def _tool_use(name: str, input_: dict, id_: str = "toolu_1") -> ToolUseBlock:
+def _tool_use(name: str, input_: dict[str, Any], id_: str = "toolu_1") -> ToolUseBlock:
     return ToolUseBlock(id=id_, input=input_, name=name, type="tool_use")
 
 
-def _message(content: list) -> Message:
+def _message(content: list[ContentBlock]) -> Message:
     return Message(
         id="msg_1",
         content=content,

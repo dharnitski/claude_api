@@ -1,4 +1,6 @@
-from message import MessageParam, add_user_message, text_from_message
+from anthropic.types import MessageParam
+
+from message import add_user_message, text_from_message
 from tool_functions import run_conversation
 
 

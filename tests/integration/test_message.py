@@ -1,4 +1,6 @@
-from message import MessageParam, add_user_message, chat, text_from_message
+from anthropic.types import MessageParam
+
+from message import add_user_message, chat, text_from_message
 
 
 def test_chat_returns_response_from_api() -> None:
